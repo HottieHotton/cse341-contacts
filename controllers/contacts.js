@@ -13,6 +13,23 @@ const getAll = async (req, res) =>{
     });
 }
 
+const getGender = async (req, res) =>{
+    const param = req.params.filter;
+    let returnList = [];
+    const result = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).find();
+    result.toArray().then((contacts) => {
+        res.setHeader("Content-Type", "application/json");
+        contacts.forEach(contact => {
+            if(contact["gender"] == param.toUpperCase()){
+                returnList.push(contact);
+            }
+        });
+        res.status(200).json(returnList)
+    }).catch((err) =>{
+        console.error(err);
+    });
+}
+
 const getID = async (req, res) =>{
     const contactID = new objectID(req.params.id);
     const result = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).find({_id: contactID});
@@ -24,4 +41,4 @@ const getID = async (req, res) =>{
     });
 }
 
-module.exports = {getAll,getID};
+module.exports = {getAll,getID,getGender};

@@ -5,4 +5,6 @@ router.get('/', contactController.getAll);
 
 router.get('/:id', contactController.getID);
 
+router.get('/gender/:filter', contactController.getGender);
+
 module.exports = router;
