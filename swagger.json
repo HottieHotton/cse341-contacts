@@ -5,10 +5,10 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "https://cse341-contacts-t3nz.onrender.com",
+  "host": "www.cse341-contacts-t3nz.onrender.com",
   "basePath": "",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/api-docs/swagger.json": {
