@@ -63,7 +63,12 @@ const createContact = async (req,res) =>{
 const updateContact = async (req,res) =>{
     const contactID = new objectID(req.params.id);
     const update = {
-        $set: req.body
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        favoriteColor: req.body.favoriteColor,
+        birthday: req.body.birthday,
+        gender: req.body.gender
     }
     const response = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).replaceOne({_id: contactID}, update);
     if(response.modifiedCount > 0){
