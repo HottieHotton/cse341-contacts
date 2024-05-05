@@ -2,7 +2,7 @@ const mongodb = require("../db/connect");
 const objectID = require("mongodb").ObjectId;
 const dotenv = require("dotenv").config();
 
-
+//GET calls
 const getAll = async (req, res) =>{
     const result = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).find();
     result.toArray().then((contacts) => {
@@ -41,4 +41,47 @@ const getID = async (req, res) =>{
     });
 }
 
-module.exports = {getAll,getID,getGender};
+//POST call
+const createContact = async (req,res) =>{
+    const contact = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        favoriteColor: req.body.favoriteColor,
+        birthday: req.body.birthday,
+        gender: req.body.gender
+    }
+    const response = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).insertOne(contact);
+    if(response.acknowledged){
+        res.status(200).send();
+    }else{
+        res.status(404).json(response.error || "Malformed request. Please review contents and try again.")
+    }
+}
+
+//PUT call
+const updateContact = async (req,res) =>{
+    const contactID = new objectID(req.params.id);
+    const update = {
+        $set: req.body
+    }
+    const response = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).replaceOne({_id: contactID}, update);
+    if(response.modifiedCount > 0){
+        res.status(200).send();
+    }else{
+        res.status(404).json(response.error || "Malformed request. Please review contents and try again.")
+    }
+}
+
+//DELETE call
+const deleteContact = async (req,res) =>{
+    const contactID = new objectID(req.params.id);
+    const response = await mongodb.getDatabase().db(process.env.db).collection(process.env.collection).deleteOne({_id: contactID});
+    if(response.deletedCount > 0){
+        res.status(200).send();
+    }else{
+        res.status(404).json(response.error || "Malformed request. Please review contents and try again.")
+    }
+}
+
+module.exports = {getAll,getID,getGender,createContact,updateContact,deleteContact};
