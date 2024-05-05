@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "www.cse341-contacts-t3nz.onrender.com",
+  "host": "cse341-contacts-t3nz.onrender.com",
   "basePath": "",
   "schemes": [
     "https"
