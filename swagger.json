@@ -132,7 +132,7 @@
         "description": "Update a contact through their ID",
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
